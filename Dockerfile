@@ -1,22 +1,20 @@
 # Use a lightweight Python base image
 FROM python:3.9-slim
 
-# Set the working directory inside the container
-WORKDIR /app
+# Set the working directory to the backend folder
+WORKDIR /app/backend
 
-# --- CRITICAL FIX: Add current directory to Python path for imports ---
-ENV PYTHONPATH=/app
+# Copy requirements and install dependencies
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copy the requirements file and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy backend directory
+COPY backend/ .
 
-# Copy the entire backend directory 
-COPY backend/ ./backend/
+# Make sure __init__.py files exist
+RUN touch __init__.py src/__init__.py
 
-# Expose the port that FastAPI will run on
 EXPOSE 8000
 
-# Command to run the application using Uvicorn
-# This import string "backend.app" now works because /app is on the PYTHONPATH
-CMD ["uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# ✅ Run uvicorn from within backend folder
+CMD ["uvicorn", "backend.src.app:app", "--host", "0.0.0.0", "--port", "8000", "--app-dir", "/app"]
