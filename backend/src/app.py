@@ -12,7 +12,7 @@ app = FastAPI(
 )
 
 # --- CORS Configuration ---
-origins = ["*", "http://localhost:8080"]
+origins = ["*", "http://localhost:8080","https://injection-molding-predict-gppyicp7k-preetham92s-projects.vercel.app"]
 
 app.add_middleware(
     CORSMiddleware,
