@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, AlertCircle, Activity } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-const API_ENDPOINT = "https://manufacturing-output-api.onrender.com";
+const API_ENDPOINT = "https://manufacturing-output-api.onrender.com/predict";
 
 interface FormData {
   Injection_Temperature: string;
